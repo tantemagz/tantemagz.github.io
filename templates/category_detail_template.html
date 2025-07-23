@@ -1,0 +1,89 @@
+{% extends "base_template.html" %}
+
+{% block title %}Kumpulan {{ label_name }}{% endblock %}
+
+{% block content %}
+    <div class="latest-post-title"><h1 style="font-size:16px;">Kumpulan {{ label_name }}</h1></div>
+
+    {% if posts %}
+        {% for post in posts %}
+        <article class='post'>
+              {% if post.labels %}
+    <div class="label-line">
+        <span class="label-info-th">
+        {% for label in post.labels %}
+            <a href="/kategori/{{ label|slugify }}.html">{{ label }}</a>
+        {% endfor %}
+        </span>
+    </div>
+    {% endif %}  
+            {% if post.thumbnail_url %}
+            <div class='img-thumbnail-wrap'>
+<div class='img-thumbnail'>
+                <img src="{{ post.thumbnail_url }}" alt="{{ post.title }} thumbnail">
+            </div>
+            </div>
+                
+            {% endif %}
+                
+            <div class="post-content-wrapper">
+                <h2 class='post-title entry-title'><a href="{{ post.detail_url }}">{{ post.title }}</a></h2>
+                
+                <div class="post-snippet">
+                    {{ post.parsed_content | safe }}
+                
+                <a class="read-more-link" href="{{ post.detail_url }}">Baca cerita &#187;</a>
+            </div>
+                <div class='post-info info-1'>
+<span class='author-info'>
+By admin
+</span>
+<span class='time-info'>
+                    on {{ post.published | date_format }}
+</span>
+                </div>
+        </article>
+        {% endfor %}
+    
+        {# --- BAGIAN NAVIGASI PAGINASI (di category_detail_template.html) --- #}
+<div class="pagination">
+    <span class='showpageOf'>Page {{ current_page }} of {{ total_pages }}</span>
+
+    {# Tombol "First" #}
+    {% if current_page > 1 %}
+        <span class="displaypageNum firstpage"><a href="/kategori/{{ label_slug }}.html">First</a></span>
+    {% endif %}
+
+    {# Tombol "Prev" #}
+    {% if prev_page_url %}
+        <span class="displaypageNum"><a href="{{ prev_page_url }}">Prev</a></span>
+    {% endif %}
+
+    {# Angka Halaman #}
+    {% for p in range(1, total_pages + 1) %}
+        {% if p == current_page %}
+            <span class="pagecurrent">{{ p }}</span>
+        {% elif p == 1 %}
+            <span class="displaypageNum"><a href="/kategori/{{ label_slug }}.html">1</a></span>
+        {% else %}
+            <span class="displaypageNum"><a href="/kategori/{{ label_slug }}/page/{{ p }}.html">{{ p }}</a></span>
+        {% endif %}
+    {% endfor %}
+
+    {# Tombol "Next" #}
+    {% if next_page_url %}
+        <span class="displaypageNum"><a href="{{ next_page_url }}">Next</a></span>
+    {% endif %}
+
+    {# Tombol "Last" #}
+    {% if current_page < total_pages %}
+        <span class="displaypageNum lastpage"><a href="/kategori/{{ label_slug }}/page/{{ total_pages }}.html">Last</a></span>
+    {% endif %}
+</div>
+{# --- AKHIR BAGIAN NAVIGASI PAGINASI --- #}
+    {% else %}
+        <p>Tidak ada postingan yang ditemukan dalam kategori ini.</p>
+    {% endif %}
+
+    
+{% endblock %}
