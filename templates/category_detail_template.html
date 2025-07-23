@@ -1,6 +1,11 @@
 {% extends "base_template.html" %}
 
-{% block title %}Kumpulan {{ label_name }}{% endblock %}
+{% block title %} {% endblock %}
+{% block head_extra %}
+<title>Kumpulan {{ label_name }}</title>
+<meta content="Temukan Kumpulan {{ label_name }} di halaman ini." name="description"/>
+<meta content="{{ label_name }}" name="keywords"/>
+{% endblock %}
 
 {% block content %}
     <div class="latest-post-title"><h1 style="font-size:16px;">Kumpulan {{ label_name }}</h1></div>
