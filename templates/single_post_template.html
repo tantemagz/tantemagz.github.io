@@ -1,10 +1,11 @@
 {% extends "base_template.html" %}
 
-{% block title %}{{ post.title }}{% endblock %}
+{% block title %}{% endblock %}
 
 {% block head_extra %}
+<title>{{ post.title }}</title>
     <meta name="description" content="{{ post.parsed_content }}">
-<link rel="canonical" href="{{ post.absolute_url }}">
+<link rel="canonical" href="{{ post.detail_url }}">
 
 {% endblock %}
 
