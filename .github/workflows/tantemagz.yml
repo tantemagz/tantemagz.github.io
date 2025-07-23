@@ -1,0 +1,48 @@
+# .github/workflows/blogger_api.yml
+name: Fetch Blogger Posts and Deploy to GitHub Pages
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
+  push:
+    branches:
+      - main # Jalankan workflow saat ada push ke branch main
+
+jobs:
+  build_and_deploy: # Nama job untuk deployment
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Penting! Berikan izin tulis ke repositori
+      pages: write    # Penting! Berikan izin untuk mengelola GitHub Pages
+      id-token: write # Penting! Digunakan untuk autentikasi OIDC
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        pip install requests Jinja2 beautifulsoup4
+
+    - name: Run Blogger API script to generate HTML files
+      env:
+        BLOGGER_API_KEY: ${{ secrets.BLOGGER_API_KEY }}
+        BLOG_ID: ${{ secrets.BLOG_ID }}
+      run: |
+        python main.py
+
+    # --- Bagian PENTING untuk Deployment ke GitHub Pages ---
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      if: github.ref == 'refs/heads/main' # Pastikan hanya berjalan di branch main
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./ # Direktori yang akan di-deploy (semua file di root runner)
+        publish_branch: gh-pages # <-- Kembali ke gh-pages karena ini yang berhasil Anda setel
+        # Clean: true adalah default, akan menghapus semua file lama di branch target sebelum deploy
