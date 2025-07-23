@@ -1,0 +1,22 @@
+<aside id="sidebar-wrapper">
+    <h2 class="title">Artikel Terbaru</h2>
+    <ul>
+        {# Pastikan 'recent_posts' tersedia di konteks template #}
+        {% if recent_posts %}
+            {% for post in recent_posts %}
+                <li><a href="{{ post.detail_url }}">{{ post.title }}</a></li>
+            {% endfor %}
+        {% else %}
+            <li>Tidak ada artikel terbaru.</li>
+        {% endif %}
+    </ul>
+
+    <h2 class="title">Kategori</h2>
+    <ul>
+        {% for label in all_labels %} {# all_labels dikirim dari main.py #}
+            <li><a href="/kategori/{{ label|slugify }}.html">{{ label }}</a></li>
+        {% endfor %}
+    </ul>
+
+    
+</aside>
