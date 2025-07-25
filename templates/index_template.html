@@ -1,18 +1,79 @@
+
+
 {% extends "base_template.html" %}
 
 {% block title %}
     
 {% endblock %}
 {% block head_extra %}
-<title>Cerita Dewasa Ngentot Terbaru</title>
-<meta content="Kumpulan Cerita Dewasa Ngentot Terbaru 2025" name="description"/>
-<meta content="Cerita Dewasa, Cerita Ngentot, Cerita Dewasa Terbaru, Cerita Ngentot Terbaru, Cerita Dewasa Ngentot" name="keywords"/>
-<link rel="canonical" href="https://tantemagz.github.io"/>
 
 {% endblock %}
 
 
 {% block content %}
+
+
+ <style>
+        .container {
+            background-color: #ffffff;
+            padding: 30px 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        #countdown {
+            font-size: 1.5em;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        #timer {
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        /* Styling dasar untuk tombol */
+        .button {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+
+        .warning-message {
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            color: #856404;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+        }
+    </style>
+
+
+<div class="container">
+        
+        <div class="warning-message">
+            Mohon sabar, tombol menuju bab 2 akan muncul setelah waktu mundur habis.
+        </div>
+        <div id="countdown">Tunggu <span id="timer">15</span> detik...</div>
+        <a href="#" id="redirectButton" style="display:none;" class="button">Klik Untuk Melanjutkan!</a>
+    </div>
     
             <div class='latest-post-title'>
 <h2>Cerita Terbaru</h2>
@@ -111,4 +172,47 @@ By Tante Magz
     {% else %}
         <p>Tidak ada postingan yang ditemukan.</p>
     {% endif %}
+
+
+<script>
+        // Fungsi untuk mendapatkan parameter dari URL
+        function getQueryParam(param) {
+            let urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // Ambil URL tujuan dari parameter 'url'
+        let targetUrl = getQueryParam('url');
+        // Ambil fragment (hash) dari URL saat ini
+        const fragment = window.location.hash; // Ini akan mengembalikan '#lanjut' atau ''
+
+        const redirectButton = document.getElementById('redirectButton');
+        const countdownDiv = document.getElementById('countdown');
+        const timerSpan = document.getElementById('timer');
+
+        let timeLeft = 10; // Waktu countdown dalam detik
+
+        if (targetUrl) {
+            // Gabungkan targetUrl dengan fragment (jika ada)
+            if (fragment) {
+                targetUrl += fragment;
+            }
+            redirectButton.href = decodeURIComponent(targetUrl); // Decode URL jika ada karakter khusus
+
+            const countdownInterval = setInterval(() => {
+                timeLeft--;
+                timerSpan.textContent = timeLeft;
+
+                if (timeLeft <= 0) {
+                    clearInterval(countdownInterval);
+                    countdownDiv.style.display = 'none'; // Sembunyikan div hitungan mundur
+                    redirectButton.style.display = 'block'; // Tampilkan tombol
+                }
+            }, 1000); // Setiap 1 detik
+        } else {
+            countdownDiv.innerHTML = "Link tidak valid. Pastikan Anda memiliki parameter 'url' di URL.";
+            countdownDiv.style.color = "#dc3545"; // Warna merah untuk pesan error
+        }
+    </script>
+
 {% endblock %}
