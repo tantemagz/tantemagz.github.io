@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css"> 
+    <title>{{ post.title }}</title>
+    <meta name="description" content="{{ post.parsed_content }}">
+<link rel="canonical" href="https://tantemagz.github.io{{ post.detail_url }}">
+
+    
+</head>
+<body class="is-homepage">
+    {# --- CUSTOM HEADER --- #}
+    {% include 'custom_header_post.html' %}
+    {# --- AKHIR CUSTOM HEADER --- #}
+
+    <div id="wrapper">
+        <div id="post-wrapper">
+        <div class="post-container">
+            {# --- MAIN CONTENT BLOCK --- #}
+            {% block content %}{% endblock %}
+            {# --- AKHIR MAIN CONTENT BLOCK --- #}
+        </div></div>
+
+        {# --- CUSTOM SIDEBAR --- #}
+        {% include 'custom_sidebar.html' %}
+        {# --- AKHIR CUSTOM SIDEBAR --- #}
+    </div>
+
+    {# --- CUSTOM FOOTER --- #}
+    {% include 'custom_footer.html' %}
+    {# --- AKHIR CUSTOM FOOTER --- #}
+</body>
+</html>
