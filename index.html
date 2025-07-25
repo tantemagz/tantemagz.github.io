@@ -123,10 +123,12 @@
 
 <div class="container">
         
-        <div class="warning-message">
+        
+        <div id="countdown">
+            <div class="warning-message">
             Mohon sabar, tombol menuju bab 2 akan muncul setelah waktu mundur habis.
         </div>
-        <div id="countdown">Tunggu <span id="timer">15</span> detik...</div>
+            <p></p>Tunggu <span id="timer">15</span> detik...</p></div>
         <a href="#" id="redirectButton" style="display:none;" class="button-bab">Klik Untuk Melanjutkan!</a>
     </div>
     
@@ -283,8 +285,8 @@ By Tante Magz
                 }
             }, 1000); // Setiap 1 detik
         } else {
-            countdownDiv.innerHTML = "Link tidak valid. Pastikan Anda memiliki parameter 'url' di URL.";
-            countdownDiv.style.color = "#dc3545"; // Warna merah untuk pesan error
+            countdownDiv.innerHTML = "";
+            countdownDiv.style.color = "#fff"; // Warna merah untuk pesan error
         }
     </script>
 
